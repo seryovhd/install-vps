@@ -11,7 +11,7 @@ Antes de proceder con la instalación, asegúrate de tener acceso a un servidor 
 1. **Clona el repositorio en tu servidor VPS:**
 
     ```bash
-    git clone https://github.com/MinoruMX/install-vps setup
+    git clone https://github.com/seryovhd/install-vps setup
     ```
 
 2. **Asigna permisos para ejecutar el script:**

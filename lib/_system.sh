@@ -680,3 +680,40 @@ frontend_build() {
   sleep 2
   echo -e "\n✅ ${WHITE}BUILD COMPLETO${GRAY_LIGHT}\n"
 }
+
+fix_502() {
+  print_banner
+  printf "${WHITE} 💻 FIX 502-Bad Gateway...${GRAY_LIGHT}\n\n"
+
+  sleep 2
+
+  # Extraer puerto del archivo NGINX
+  frontend_port=$(grep "proxy_pass http://127.0.0.1:" /etc/nginx/sites-available/"$empresa_atualizar"-frontend | sed -E 's/.*127\.0\.0\.1:([0-9]+).*/\1/')
+
+  # Validar que se detectó un puerto
+  if [[ -z "$frontend_port" ]]; then
+    echo -e "${RED}❌ No se pudo detectar el puerto del frontend. Verifica el archivo NGINX.${GRAY_LIGHT}"
+    return 1
+  fi
+
+  printf "\n${GREEN}✅ Puerto detectado automáticamente: ${frontend_port}${GRAY_LIGHT}\n"
+
+  sudo su - deploy <<EOF
+mkdir -p /home/deploy/${empresa_atualizar}/frontend
+cat > /home/deploy/${empresa_atualizar}/frontend/server.js <<'EOL'
+const express = require("express");
+const path = require("path");
+const app = express();
+
+app.use(express.static(path.join(__dirname, "build")));
+
+app.get("/*", function (req, res) {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
+
+app.listen(${frontend_port});
+EOL
+EOF
+
+  sleep 2
+}

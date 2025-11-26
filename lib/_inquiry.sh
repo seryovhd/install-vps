@@ -274,10 +274,21 @@ software_frontend_build(){
   reboot
 }
 
+software_change_version(){
+  get_empresa_atualizar
+  get_link_git
+  change_version
+}
+
 software_fix_502(){
   get_empresa_atualizar
   fix_502
   reboot
+}
+
+software_update_baileys(){
+  get_empresa_atualizar
+  backend_update_baileys
 }
 
 inquiry_options() {
@@ -287,17 +298,21 @@ inquiry_options() {
   printf "\n\n"
   printf "   [1] Instalar Chasap\n"
   printf "   [2] Actualizar Chasap\n"
-  printf "   [3] Eliminar Chasap\n"
-  printf "   [4] Bloquear Chasap\n"
-  printf "   [5] Desbloquear Chasap\n"
-  printf "   [6] Cambiar dominio Chasap\n"
-  printf "   [7] Reinstalar Certificado Certbot\n"
+  printf "   [3] Cambiar Versión Chasap\n"
+  printf "   [4] Eliminar Chasap\n"
+  printf "   [5] Bloquear Chasap\n"
+  printf "   [6] Desbloquear Chasap\n"
+  printf "   [7] Cambiar dominio Chasap\n"
   printf "   [8] Revisar Logs Backend\n"
   printf "   [9] Revisar Logs Frontend\n"
   printf "   [10] Fix - Rebuilder Front y Back\n"
   printf "   [11] Fix - Backend DB Migrate\n"
   printf "   [12] Fix - PM2 Services\n"
   printf "   [13] Fix - 502 Bad Gateway\n"
+  printf "   [14] Fix - Reinstalar Certificado Certbot\n"
+  printf "   [15] Actualizar paquete Baileys Backend\n"
+  printf "   [20] Actualizar Backend\n"
+  printf "   [21] Actualizar Frontend\n"  
   printf "\n"
   read -p "> " option
 
@@ -308,27 +323,26 @@ inquiry_options() {
       software_update 
       exit
       ;;
-
     3) 
-      software_delete 
+      software_change_version
       exit
       ;;
     4) 
-      software_bloquear 
+      software_delete 
       exit
       ;;
     5) 
-      software_desbloquear 
+      software_bloquear 
       exit
       ;;
     6) 
+      software_desbloquear 
+      exit
+      ;;
+    7) 
       software_dominio 
       exit
       ;;        
-    7) 
-      software_certbot
-      exit
-      ;;   
     8) 
       software_logs_backend
       exit
@@ -353,6 +367,14 @@ inquiry_options() {
       software_fix_502
       exit
       ;;  
+    14) 
+      software_certbot
+      exit
+      ;;   
+    15)
+      software_update_baileys
+      exit
+      ;;
     20) 
       software_backend_build
       exit

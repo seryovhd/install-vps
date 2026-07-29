@@ -21,7 +21,7 @@ get_mysql_root_password() {
 get_link_git() {
   print_banner
   
-  default_link="https://github.com/seryovhd/chasap-pro.git"
+  default_link="https://github.com/MinoruMX/Chasap.git"
   printf "${WHITE} 💻 Ingresa el enlace de ${YELLOW}GITHUB${WHITE} de Chasap que deseas instalar:${GRAY_LIGHT}\n"
   printf "  Presiona Enter para usar el valor por defecto:\n\n"
   printf "  ${default_link}\n\n"
